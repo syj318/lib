@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'charging_page.dart';
-import 'exercise_page.dart';  // ExercisePage import 추가
-import 'weather_page.dart';   // WeatherPage import 추가
 
 void main() => runApp(WaterIntakeApp());
 
@@ -10,9 +8,7 @@ class WaterIntakeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '수분 섭취 앱',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: WaterIntakeHomePage(),
     );
   }
@@ -24,67 +20,8 @@ class WaterIntakeHomePage extends StatefulWidget {
 }
 
 class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
-  int currentIntake = 1220;
-  int dailyGoal = 2000;
-
-  // 목표 설정 다이얼로그
-  void _showGoalDialog() {
-    final TextEditingController goalController = TextEditingController();
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('하루 목표 물 섭취량 설정'),
-          content: TextField(
-            controller: goalController,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(hintText: '목표 섭취량 (ml)'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // 다이얼로그 닫기
-              },
-              child: const Text('취소'),
-            ),
-            TextButton(
-              onPressed: () {
-                // 입력값이 2000ml 이하일 경우 경고 메시지 출력
-                int? newGoal = int.tryParse(goalController.text);
-                if (newGoal != null && newGoal < 2000) {
-                  // 경고 메시지 출력
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('경고'),
-                        content: const Text('목표 섭취량은 2000ml 이상이어야 합니다.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // 경고 메시지 닫기
-                            },
-                            child: const Text('확인'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                } else {
-                  // 목표 설정
-                  setState(() {
-                    dailyGoal = newGoal ?? dailyGoal;
-                  });
-                  Navigator.of(context).pop(); // 목표 설정 다이얼로그 닫기
-                }
-              },
-              child: const Text('확인'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  final int currentIntake = 1220;
+  final int dailyGoal = 2000;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +32,10 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
       body: SafeArea(
         child: Column(
           children: [
+            // 상단 여백
             const SizedBox(height: 20),
+
+            // 가운데 영역
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -116,14 +56,19 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
                           value: progress,
                           strokeWidth: 12,
                           backgroundColor: Colors.blue.shade100,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.blue,
+                          ),
                         ),
                       ),
                       Column(
                         children: [
                           Text(
                             '$currentIntake ml',
-                            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           Text('of $dailyGoal ml'),
                         ],
@@ -131,20 +76,28 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  Text('${(progress * 100).round()}%', style: const TextStyle(fontSize: 27)),
+                  Text(
+                    '${(progress * 100).round()}%',
+                    style: const TextStyle(fontSize: 27),
+                  ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: _showGoalDialog, // 추가 버튼 눌렀을 때 목표 설정 다이얼로그 열기
+                    onPressed: () {},
                     child: const Text('추가'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue.shade700,
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 50,
+                        vertical: 15,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
+
+            // 하단 아이콘 메뉴
             const Divider(height: 1, color: Colors.black12),
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0, top: 10),
@@ -157,7 +110,9 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
                     onTap: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (_) => WaterIntakeHomePage()),
+                        MaterialPageRoute(
+                          builder: (_) => WaterIntakeHomePage(),
+                        ),
                       );
                     },
                   ),
@@ -171,26 +126,8 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
                       );
                     },
                   ),
-                  _BottomIcon(
-                    text: '운동량',
-                    icon: Icons.pool,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const ExercisePage()), // ExercisePage로 이동
-                      );
-                    },
-                  ),
-                  _BottomIcon(
-                    text: '날씨',
-                    icon: Icons.wb_sunny,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => WeatherPage()), // 날씨 페이지로 이동
-                      );
-                    },
-                  ),
+                  _BottomIcon(text: '운동량', icon: Icons.pool, onTap: () {}),
+                  _BottomIcon(text: '날씨', icon: Icons.wb_sunny, onTap: () {}),
                 ],
               ),
             ),
