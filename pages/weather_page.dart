@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'charging_page.dart';
-import 'exercise_page.dart';
-import 'main.dart'; // WaterIntakeHomePage가 main.dart에 있다면
+import 'report_page.dart';
+import '../main.dart'; // WaterIntakeHomePage가 main.dart에 있다면
 
 class WeatherPage extends StatelessWidget {
   const WeatherPage({super.key});
@@ -76,8 +76,8 @@ class WeatherPage extends StatelessWidget {
                 },
               ),
               _BottomIcon(
-                text: '운동량',
-                icon: Icons.pool,
+                text: '리포트',
+                icon: Icons.insert_chart_outlined,
                 onTap: () {
                   Navigator.pushReplacement(
                     context,

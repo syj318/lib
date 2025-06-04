@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'charging_page.dart';
+import 'report_page.dart';
+import 'weather_page.dart';
 
 void main() => runApp(WaterIntakeApp());
 
@@ -32,10 +34,7 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            // 상단 여백
             const SizedBox(height: 20),
-
-            // 가운데 영역
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +55,7 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
                           value: progress,
                           strokeWidth: 12,
                           backgroundColor: Colors.blue.shade100,
-                          valueColor: AlwaysStoppedAnimation<Color>(
+                          valueColor: const AlwaysStoppedAnimation<Color>(
                             Colors.blue,
                           ),
                         ),
@@ -82,7 +81,9 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // 향후 수동 기록 추가 기능 연결
+                    },
                     child: const Text('추가'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue.shade700,
@@ -97,7 +98,6 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
               ),
             ),
 
-            // 하단 아이콘 메뉴
             const Divider(height: 1, color: Colors.black12),
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0, top: 10),
@@ -107,14 +107,7 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
                   _BottomIcon(
                     text: '수분측정',
                     icon: Icons.opacity,
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => WaterIntakeHomePage(),
-                        ),
-                      );
-                    },
+                    onTap: () {}, // 현재 페이지이므로 비활성
                   ),
                   _BottomIcon(
                     text: '충전상태',
@@ -126,8 +119,26 @@ class _WaterIntakeHomePageState extends State<WaterIntakeHomePage> {
                       );
                     },
                   ),
-                  _BottomIcon(text: '운동량', icon: Icons.pool, onTap: () {}),
-                  _BottomIcon(text: '날씨', icon: Icons.wb_sunny, onTap: () {}),
+                  _BottomIcon(
+                    text: '리포트',
+                    icon: Icons.insert_chart_outlined,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const ExercisePage()), // report_page.dart 안에 있음
+                      );
+                    },
+                  ),
+                  _BottomIcon(
+                    text: '날씨',
+                    icon: Icons.wb_sunny,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const WeatherPage()),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'exercise_page.dart';
-import 'weather_page.dart'; // WeatherPage import 추가
+import 'report_page.dart';
+import 'weather_page.dart';
 
 class ChargingPage extends StatelessWidget {
   const ChargingPage({super.key});
@@ -63,13 +63,13 @@ class ChargingPage extends StatelessWidget {
                     icon: Icons.power_settings_new,
                   ),
                   _BottomIcon(
-                    text: '운동량',
-                    icon: Icons.pool,
+                    text: '리포트',
+                    icon: Icons.insert_chart_outlined,
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => ExercisePage(), // const 제거됨
+                          builder: (_) => const ExercisePage(), // 리포트용 페이지
                         ),
                       );
                     },
@@ -80,7 +80,7 @@ class ChargingPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => WeatherPage()), // 날씨 페이지로 이동
+                        MaterialPageRoute(builder: (_) => WeatherPage()),
                       );
                     },
                   ),
@@ -112,7 +112,7 @@ class _BottomIcon extends StatelessWidget {
           const SizedBox(height: 5),
           Text(
             text,
-            style: TextStyle(color: Colors.blue.shade800),
+            style: TextStyle(color: Colors.blue.shade800, fontSize: 14),
           ),
         ],
       ),
